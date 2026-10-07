@@ -1,0 +1,36 @@
+name: Actualizar Vitral Automáticamente
+
+on:
+  push:
+    paths:
+      - 'Base_de_datos_Vitral_de_Proveedores.xlsx' # Se activa solo si cambias el Excel
+  workflow_dispatch: # Permite ejecutarlo manualmente con un botón si lo deseas
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Descargar código del repositorio
+        uses: actions/checkout@v3
+
+      - name: Configurar Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Instalar librerías
+        run: |
+          python -m pip install --upgrade pip
+          pip install openpyxl
+
+      - name: Ejecutar script de generación
+        run: python generar_vitral.py
+
+      - name: Guardar y subir cambios al index.html
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git commit -m "Auto-actualización de Vitral desde Excel [skip ci]" || exit 0
+          git push
