@@ -24,7 +24,7 @@ warnings.filterwarnings("ignore")
 
 # ── Configuración ────────────────────────────────────────────
 EXCEL_FILE = Path(__file__).parent / "Base_de_datos_Vitral_de_Proveedores.xlsx"
-HTML_FILE  = Path(__file__).parent / "Vitral_Proveedores_CLRAH.html"
+HTML_FILE = Path(__file__).parent / "index.html"
 
 COL = {
     "nombre":    1,
